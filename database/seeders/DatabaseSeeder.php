@@ -17,9 +17,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        \App\Models\User::factory()->create([
+            'name' => 'Administrator',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('admin123'),
         ]);
+
+        \App\Models\Kategori::insert([
+            ['ket_kategori' => 'Fasilitas Kelas'],
+            ['ket_kategori' => 'Kebersihan Lingkungan'],
+            ['ket_kategori' => 'Fasilitas Bengkel/Lab'],
+            ['ket_kategori' => 'Keamanan'],
+        ]);
+
+        \App\Models\Siswa::create([
+            'nis' => 24524,
+            'kelas' => 'XII RPL 1',
+        ]);
+
+
     }
 }

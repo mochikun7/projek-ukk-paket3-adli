@@ -9,14 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('kategoris', function (Blueprint $table) {
-            $table->int('id_kategori',5);
-            $table->string('ket_kategori',30);
-            $table->timestamps();
-        });
-    }
+    public function up(){
+    Schema::create('kategoris', function (Blueprint $table) {
+        $table->integer('id_kategori')->autoIncrement(); 
+        $table->string('ket_kategori', 30);
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

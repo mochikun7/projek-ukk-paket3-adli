@@ -9,14 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('siswas', function (Blueprint $table) {
-            $table->int('nis')->primary();
-            $table->string('kelas', 10);
-            $table->timestamps();
-        });
-    }
+    public function up()
+{
+    Schema::create('siswas', function (Blueprint $table) {
+        // Ganti 'int' jadi 'integer'
+        $table->integer('nis')->primary(); 
+        $table->string('kelas', 10);
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

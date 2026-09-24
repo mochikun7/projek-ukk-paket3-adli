@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class InputAspirasi extends Model
 {
-    //
+    protected $guarded = [];
 }

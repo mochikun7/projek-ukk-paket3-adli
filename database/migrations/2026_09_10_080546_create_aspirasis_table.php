@@ -9,14 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+ public function up()
 {
     Schema::create('aspirasis', function (Blueprint $table) {
         $table->id('id_aspirasi');
         $table->foreignId('id_pelaporan')->references('id_pelaporan')->on('input_aspirasis');
         $table->enum('status', ['Menunggu', 'Proses', 'Selesai'])->default('Menunggu'); 
-        $table->foreignId('id_kategori')->references('id_kategori')->on('kategoris');
-        $table->text('feedback');
+        
+        $table->integer('id_kategori');
+        $table->foreign('id_kategori')->references('id_kategori')->on('kategoris');
+        
+        $table->text('feedback'); 
         $table->timestamps();
     });
 }
