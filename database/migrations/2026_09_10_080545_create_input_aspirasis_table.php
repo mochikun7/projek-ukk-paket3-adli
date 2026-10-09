@@ -25,6 +25,8 @@ return new class extends Migration
         $table->string('lokasi', 50);
         $table->string('ket', 50);
         
+        $table->string('foto')->nullable(); // nullable() artinya boleh dikosongin
+        
         $table->timestamps();
     });
 }

@@ -1,0 +1,365 @@
+/* =========================================================
+   Sistem Pengaduan Sekolah — tema "soft glass"
+   Letak file: public/css/pengaduan.css
+   ========================================================= */
+
+/* ---------- 1. Warna & ukuran (ubah di sini saja) ---------- */
+:root {
+    --ink:        #1d2b33;   /* teks utama */
+    --ink-soft:   #5d6f78;   /* teks sekunder */
+    --teal:       #2f8f8a;   /* warna utama */
+    --teal-deep:  #1f6f78;
+    --indigo:     #6a78d1;   /* pasangan gradien */
+    --sidebar-bg: rgba(22, 48, 56, .78);
+
+    --glass-bg: rgba(255, 255, 255, .72);
+    --glass-border: rgba(255, 255, 255, .75);
+    --glass-shadow: 0 10px 30px rgba(47, 100, 110, .12);
+
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+
+    --sidebar-w: 260px;
+    --gap: 14px;
+}
+
+/* ---------- 2. Dasar halaman ---------- */
+body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    background-color: #eaf4f1;
+    background-attachment: fixed;
+}
+/* background gradien di layer tersendiri (jauh lebih ringan saat scroll) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        radial-gradient(900px 500px at 8% 0%,   #cdeee6 0%, transparent 60%),
+        radial-gradient(800px 600px at 100% 10%, #dcd9f7 0%, transparent 60%),
+        radial-gradient(700px 500px at 60% 100%, #fde4d3 0%, transparent 60%);
+    pointer-events: none;
+}
+
+/* ---------- 3. Sidebar (kaca gelap) ---------- */
+.sidebar {
+    position: fixed;
+    top: var(--gap);
+    left: var(--gap);
+    bottom: var(--gap);
+    width: var(--sidebar-w);
+    height: auto;
+    padding: 1.25rem 1rem;
+    background: var(--sidebar-bg);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 18px 40px rgba(20, 50, 60, .25);
+    z-index: 10;
+}
+
+.sidebar-title {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+    margin: .4rem 0 1.6rem;
+    letter-spacing: .2px;
+}
+
+.nav-pills .nav-link {
+    color: rgba(255, 255, 255, .68);
+    border-radius: var(--radius-md);
+    padding: .7rem 1rem;
+    margin-bottom: .35rem;
+    font-weight: 500;
+    transition: background .2s, color .2s;
+}
+.nav-pills .nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, .1);
+}
+.nav-pills .nav-link.active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--teal), var(--indigo));
+    box-shadow: 0 6px 16px rgba(60, 110, 170, .35);
+}
+
+/* ---------- 4. Area konten & navbar ---------- */
+.content-area {
+    margin-left: calc(var(--sidebar-w) + var(--gap) * 2);
+    padding: var(--gap) var(--gap) 2rem 0;
+    min-height: 100vh;
+    background: transparent;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .8rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+}
+.top-bar .greeting { font-weight: 600; color: var(--teal-deep); }
+
+.btn-logout {
+    color: #b4413c;
+    background: rgba(220, 80, 70, .1);
+    border: 1px solid rgba(220, 80, 70, .25);
+    border-radius: 999px;
+    padding: .35rem 1.2rem;
+    font-weight: 600;
+    font-size: .875rem;
+    transition: background .2s, color .2s;
+}
+.btn-logout:hover { background: #d9534f; color: #fff; }
+
+/* ---------- 5. Kartu kaca ---------- */
+.card {
+    background: var(--glass-bg);
+    /* -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px); */
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+}
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, .7);
+    padding: 1.1rem 1.5rem;
+}
+.card-header h5 { font-weight: 700; color: var(--ink); }
+.card-body { padding: 1.5rem; }
+
+/* kartu sambutan di dashboard */
+.hero-card {
+    position: relative;
+    border: 0;
+    color: #fff;
+    background: linear-gradient(135deg, #3a9a92 0%, #5a86c9 55%, #7b78d6 100%);
+    box-shadow: 0 18px 40px rgba(70, 110, 190, .28);
+}
+.hero-card::before,
+.hero-card::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .14);
+    pointer-events: none;
+}
+.hero-card::before { width: 280px; height: 280px; top: -110px; right: -70px; }
+.hero-card::after  { width: 200px; height: 200px; bottom: -100px; left: 8%; }
+.hero-card .card-body { position: relative; z-index: 1; padding: 3.5rem 2rem; }
+.hero-card hr { opacity: .35; }
+
+/* ---------- 6. Form ---------- */
+.form-label { font-weight: 600; font-size: .875rem; color: var(--ink-soft); }
+
+.form-control,
+.form-select {
+    background-color: rgba(255, 255, 255, .7);
+    border: 1px solid rgba(47, 143, 138, .22);
+    border-radius: var(--radius-md);
+    padding: .65rem .9rem;
+    color: var(--ink);
+}
+.form-control:focus,
+.form-select:focus {
+    background-color: #fff;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 .22rem rgba(47, 143, 138, .18);
+}
+.form-control[readonly] { background-color: rgba(255, 255, 255, .4); color: var(--ink-soft); }
+.form-control::placeholder { color: #93a3aa; }
+
+.btn-primary {
+    --bs-btn-border-width: 0;
+    background: linear-gradient(135deg, var(--teal), var(--indigo));
+    border: 0;
+    border-radius: var(--radius-md);
+    padding: .75rem 1rem;
+    box-shadow: 0 8px 20px rgba(80, 120, 190, .3);
+    transition: transform .15s, box-shadow .15s, filter .15s;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(135deg, var(--teal), var(--indigo));
+    filter: brightness(1.06);
+    box-shadow: 0 10px 24px rgba(80, 120, 190, .38);
+}
+.btn-primary:active { transform: translateY(1px); }
+
+.alert { border: 0; border-radius: var(--radius-md); }
+
+/* ---------- 7. Tabel ---------- */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: transparent;
+    --bs-table-hover-bg: rgba(255, 255, 255, .55);
+    --bs-table-border-color: rgba(47, 100, 110, .1);
+    --bs-table-color: var(--ink);
+    margin-bottom: 0;
+}
+.table > :not(caption) > * > * { padding: .95rem 1rem; }
+
+.table thead th,
+.table thead.table-dark th {
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: .82rem;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(47, 143, 138, .25);
+    box-shadow: none;
+}
+.table thead.table-dark { --bs-table-bg: transparent; --bs-table-color: var(--ink-soft); }
+
+.table-bordered > :not(caption) > * { border-width: 0; }
+.table-bordered > :not(caption) > * > * { border-width: 0 0 1px; }
+
+.thumb-bukti {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 2px solid #fff;
+    box-shadow: 0 4px 12px rgba(40, 80, 90, .18);
+    transition: transform .2s;
+}
+.thumb-bukti:hover { transform: scale(1.06); }
+
+/* ---------- 8. Badge status ---------- */
+.status-badge {
+    display: inline-block;
+    padding: .3rem .8rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
+}
+.status-menunggu { background: rgba(120, 135, 145, .16); color: #4f6068; }
+.status-proses   { background: rgba(240, 170, 40, .2);  color: #8a5a00; }
+.status-selesai  { background: rgba(50, 170, 110, .18); color: #1c7a4c; }
+.status-tanpa    { background: rgba(255, 255, 255, .6); color: var(--ink-soft); border: 1px dashed rgba(100,120,130,.35); }
+
+/* ---------- 9. Layar kecil (HP / tablet) ---------- */
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: static;
+        width: auto;
+        margin: var(--gap);
+        padding: .75rem;
+    }
+    .sidebar-title { margin-bottom: .75rem; }
+    .sidebar .nav-pills { flex-direction: row !important; flex-wrap: wrap; gap: .25rem; }
+    .content-area { margin-left: 0; padding: 0 var(--gap) 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
+
+/* =========================================================
+   TAMBAHAN — tempel di PALING BAWAH pengaduan.css
+   (admin, modal, tombol, dan halaman login)
+   ========================================================= */
+
+/* ---------- Hero versi admin (lebih dalam dari siswa) ---------- */
+.hero-admin {
+    background: linear-gradient(135deg, #1f6f78 0%, #2f5f9e 55%, #4a52b3 100%);
+    box-shadow: 0 18px 40px rgba(40, 80, 150, .3);
+}
+
+/* ---------- Tombol lain ---------- */
+.btn-sm { border-radius: var(--radius-sm); }
+
+.btn-secondary {
+    --bs-btn-border-width: 0;
+    color: var(--ink-soft);
+    background: rgba(93, 111, 120, .14);
+    border: 0;
+    border-radius: var(--radius-md);
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+    color: var(--ink);
+    background: rgba(93, 111, 120, .24);
+}
+
+.btn-success {
+    --bs-btn-border-width: 0;
+    background: linear-gradient(135deg, #2fa37a, #2f8f8a);
+    border: 0;
+    border-radius: var(--radius-md);
+    box-shadow: 0 6px 16px rgba(47, 150, 120, .3);
+}
+.btn-success:hover,
+.btn-success:focus {
+    background: linear-gradient(135deg, #2fa37a, #2f8f8a);
+    filter: brightness(1.06);
+}
+
+/* ---------- Pop-up (modal) ---------- */
+.modal-backdrop { --bs-backdrop-bg: #1d2b33; --bs-backdrop-opacity: .4; }
+
+.modal-content {
+    background: rgba(255, 255, 255, .88);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 60px rgba(30, 60, 80, .3);
+    overflow: hidden;
+}
+.modal-header,
+.modal-footer { border-color: rgba(47, 100, 110, .1); padding: 1.1rem 1.5rem; }
+.modal-title { font-weight: 700; }
+.modal-body { padding: 1.5rem; }
+
+/* ---------- Form filter admin ---------- */
+.filter-box {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, .5);
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: var(--radius-md);
+}
+
+/* ---------- Halaman login ---------- */
+.login-page { min-height: 100vh; padding: 1.5rem; }
+
+.login-card {
+    border-radius: 26px;
+    box-shadow: 0 24px 60px rgba(50, 100, 130, .2);
+    background: rgba(255, 255, 255, .72);
+}
+.login-card .card-header {
+    background: transparent;
+    border-bottom: 0;
+    padding: 2.25rem 2rem 0;
+    text-align: center;
+}
+.login-logo {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    display: grid;
+    place-items: center;
+    font-size: 1.7rem;
+    color: #fff;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--teal), var(--indigo));
+    box-shadow: 0 10px 24px rgba(80, 120, 190, .35);
+}
+.login-card h4 { font-weight: 700; margin-bottom: .25rem; }
+.login-card .card-body { padding: 1.5rem 2rem 2.25rem; }

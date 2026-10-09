@@ -30,9 +30,23 @@ class DatabaseSeeder extends Seeder
             ['ket_kategori' => 'Keamanan'],
         ]);
 
-        \App\Models\Siswa::create([
-            'nis' => 24524,
-            'kelas' => 'XII RPL 1',
+        \App\Models\Siswa::insert([
+            [
+                'nis' => 24524,
+                'kelas' => 'XII RPL 1'
+            ],
+            [
+                'nis' => 24624,
+                'kelas' => 'XI RPL 1'
+            ],
+            [
+                'nis' => 24724,
+                'kelas' => 'XII TKJ 1'
+            ],
+            [ 
+                'nis' => 24824,
+                'kelas' => 'XI TSM 2'
+            ]
         ]);
 
 

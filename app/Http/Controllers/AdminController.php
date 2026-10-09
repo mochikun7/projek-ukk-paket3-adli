@@ -36,11 +36,10 @@ class AdminController extends Controller
             'feedback' => 'required'
         ]);
 
-        // Cek ke tabel aspirasis, apakah laporan ini sudah punya status/feedback sebelumnya
+        
         $cek = DB::table('aspirasis')->where('id_pelaporan', $request->id_pelaporan)->first();
 
         if ($cek) {
-            // Kalau sudah ada di database, kita lakukan UPDATE
             DB::table('aspirasis')
                 ->where('id_pelaporan', $request->id_pelaporan)
                 ->update([
@@ -49,8 +48,7 @@ class AdminController extends Controller
                     'updated_at' => now()
                 ]);
         } else {
-            // Kalau masih kosong (pertama kali ditanggapi), kita lakukan INSERT
-            DB::table('aspirasis')->insert([
+            DB::table('aspirasis')->insert([ 
                 'id_pelaporan' => $request->id_pelaporan,
                 'id_kategori' => $request->id_kategori,
                 'status' => $request->status,
