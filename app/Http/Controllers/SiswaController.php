@@ -28,7 +28,6 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
-    
         $request->validate([
             'nis' => 'required|numeric',
             'id_kategori' => 'required',
@@ -42,28 +41,37 @@ class SiswaController extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             
-            // 1. Ambil nama asli tanpa ekstensi, lalu paksa ganti jadi .webp
             $namaAsli = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $namaFile = time() . '_' . str_replace(' ', '_', $namaAsli) . '.webp';
+            $namaFile = time() . '_' . str_replace(' ', '_', $namaAsli) . '.svg';
             
-            // 2. Cek dan bikin folder 'foto_bukti' kalau belum ada di storage
             if (!\Illuminate\Support\Facades\Storage::disk('public')->exists('foto_bukti')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->makeDirectory('foto_bukti');
             }
 
-            // 3. Ubah file yang di-upload jadi data gambar mentah di memori
+            // 1. Ambil resolusi gambar buat settingan SVG nanti
+            $imageSize = getimagesize($file);
+            $width = $imageSize[0] ?? 800;
+            $height = $imageSize[1] ?? 600;
+
+            // Baca gambar asli pakai GD Library
             $image = imagecreatefromstring(file_get_contents($file));
             
-            // 4. Tentukan lokasi simpan fisiknya
+            ob_start(); // Mulai menahan output
+            imagejpeg($image, null, 40); // 40 ini tingkat kualitas (0 jelek - 100 bagus)
+            $jpegData = ob_get_clean(); // Tangkap hasil JPEG-nya
+
+            //Ubah JPEG hasil kompresi tadi ke teks Base64
+            $base64Data = base64_encode($jpegData);
+            
+            //Rakit ke dalam SVG
+            $svgContent = '<svg xmlns="http://www.w3.org/2000/svg" width="'.$width.'" height="'.$height.'">
+                <image width="'.$width.'" height="'.$height.'" href="data:image/jpeg;base64,'.$base64Data.'" />
+            </svg>';
+            
+            // Simpan file SVG-nya ke storage
             $pathSimpan = storage_path('app/public/foto_bukti/' . $namaFile);
+            file_put_contents($pathSimpan, $svgContent);
             
-            // 5. KONVERSI & KOMPRES: Simpan sebagai WebP dengan kualitas 75% (angka 1-100)
-            imagewebp($image, $pathSimpan, 75);
-            
-            // 6. Bersihkan memori server biar aplikasi nggak ngelag
-            imagedestroy($image);
-            
-            // 7. Simpan path ini ke database
             $pathFoto = 'foto_bukti/' . $namaFile;
         }
 
@@ -75,7 +83,7 @@ class SiswaController extends Controller
             'foto' => $pathFoto,
         ]);
 
-        return back()->with('success', 'Mantap! Aspirasi kamu berhasil dikirim.');
+        return back()->with('success', 'Aspirasi kamu berhasil dikirim');
     }
 
 }

@@ -193,6 +193,7 @@ body::before {
     box-shadow: 0 8px 20px rgba(80, 120, 190, .3);
     transition: transform .15s, box-shadow .15s, filter .15s;
 }
+
 .btn-primary:hover,
 .btn-primary:focus {
     background: linear-gradient(135deg, var(--teal), var(--indigo));
@@ -363,3 +364,25 @@ body::before {
 }
 .login-card h4 { font-weight: 700; margin-bottom: .25rem; }
 .login-card .card-body { padding: 1.5rem 2rem 2.25rem; }
+
+/* ---------- Tema Soft Glass untuk Tombol Hapus ---------- */
+.btn-danger {
+    --bs-btn-border-width: 0;
+    color: #fff;
+    background: linear-gradient(135deg, #e96b6b, #c93a3a);
+    border: 0;
+    padding: .75rem 1rem;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 6px 16px rgba(200, 50, 50, .25);
+    transition: transform .15s, box-shadow .15s, filter .15s;
+}
+.btn-danger:hover,
+.btn-danger:focus {
+    color: #fff;
+    background: linear-gradient(135deg, #e96b6b, #c93a3a);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 24px rgba(200, 50, 50, .35);
+}
+.btn-danger:active { 
+    transform: translateY(1px); 
+}

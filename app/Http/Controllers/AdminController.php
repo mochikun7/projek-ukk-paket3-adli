@@ -60,4 +60,28 @@ class AdminController extends Controller
 
         return back()->with('success', 'Tanggapan berhasil disimpan cuy!');
     }
+
+    public function hapus($id_pelaporan)
+    {
+        // 1. Cari data laporannya dulu
+        $laporan = \App\Models\InputAspirasi::where('id_pelaporan', $id_pelaporan)->first();
+
+        if ($laporan) {
+            // 2. Cek apakah laporan ini punya foto? Kalau ada, hapus file fisik fotonya
+            if ($laporan->foto && \Illuminate\Support\Facades\Storage::disk('public')->exists($laporan->foto)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($laporan->foto);
+            }
+
+            // 3. Hapus data tanggapan di tabel 'aspirasis' (kalau sudah pernah ditanggapi admin)
+            // Ini penting biar nggak error relasi (foreign key constraint)
+            \Illuminate\Support\Facades\DB::table('aspirasis')->where('id_pelaporan', $id_pelaporan)->delete();
+            
+            // 4. Hapus data utamanya dari tabel 'input_aspirasis'
+            $laporan->delete();
+
+            return back()->with('success', 'Data laporan berhasil dihapus');
+        }
+
+        return back()->with('error', 'data tidak ditemukan.');
+    }
 }

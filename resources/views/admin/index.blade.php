@@ -17,7 +17,7 @@
     <!-- MENU 2: LIST ASPIRASI MASUK -->
     <div class="tab-pane fade" id="menu-list">
         <div class="card">
-            <div class="card-header"><h5 class="mb-0">Daftar Semua Aspirasi Masuk</h5></div>
+            <div class="card-header"></div>
             <div class="card-body">
                 @if(session('success')) <div class="alert alert-success">{{ session('success') }}</div> @endif
 
@@ -81,7 +81,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalTanggapi{{ $row->id_pelaporan }}">Tanggapi</button>
+                                    <!-- Tambahin align-items-center biar sejajar vertikal secara sempurna -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-sm btn-primary m-0" data-bs-toggle="modal" data-bs-target="#modalTanggapi{{ $row->id_pelaporan }}">Tanggapi</button>
+                                        
+                                        <!-- Tambahin class m-0 p-0 biar form tidak membuat tombol meleset ke atas/bawah -->
+                                        <form action="{{ route('admin.hapus', $row->id_pelaporan) }}" method="POST" class="m-0 p-0" onsubmit="return confirm('Yakin mau hapus laporan ini?');">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-danger m-0"><i class="fa-solid fa-trash-can"></i></button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

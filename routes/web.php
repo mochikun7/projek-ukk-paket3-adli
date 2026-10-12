@@ -34,4 +34,6 @@ Route::prefix('siswa')->middleware(CekRole::class.':siswa')->group(function () {
 Route::prefix('admin')->middleware(CekRole::class.':admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/tanggapi', [AdminController::class, 'tanggapi'])->name('admin.tanggapi');
+
+    Route::post('/hapus/{id_pelaporan}', [AdminController::class, 'hapus'])->name('admin.hapus');
 });
